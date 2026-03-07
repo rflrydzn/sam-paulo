@@ -1,3 +1,4 @@
+"use client";
 import {
   Stepper,
   StepperDescription,
@@ -7,8 +8,12 @@ import {
   StepperTitle,
   StepperTrigger,
 } from "@/components/ui/stepper";
+import { AppContext, useAppContext } from "@/lib/context";
+import { useContext } from "react";
 
 export default function Header() {
+  const { step } = useAppContext();
+
   const steps = [
     {
       step: 1,
@@ -32,7 +37,7 @@ export default function Header() {
       <div className="max-w-6xl mx-auto flex items-center justify-between">
         <img src="/logo.png" className="bg-white h-12" />
         <div className="space-y-8 text-center ">
-          <Stepper defaultValue={2}>
+          <Stepper defaultValue={step} value={step}>
             {steps.map(({ step, title, description }) => (
               <StepperItem
                 key={step}

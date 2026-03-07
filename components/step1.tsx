@@ -1,4 +1,9 @@
+"use client";
+
+import { useAppContext } from "@/lib/context";
+
 export default function UploadStep() {
+  const { setStep } = useAppContext();
   const tips = [
     {
       title: "Natural Lighting",
@@ -25,6 +30,11 @@ export default function UploadStep() {
       icon: "background_replace",
     },
   ];
+
+  const handleClick = () => {
+    setStep(2);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
   return (
     <main className="max-w-6xl mx-auto px-6 py-12">
       <div className="mb-10 text-center md:text-left">
@@ -144,7 +154,10 @@ export default function UploadStep() {
             <button className="px-8 py-3 rounded-lg border border-slate-700 font-bold hover:bg-slate-800 transition-all">
               Cancel
             </button>
-            <button className="bg-primary text-white px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-all flex items-center gap-2 shadow-md">
+            <button
+              onClick={() => handleClick()}
+              className="bg-primary text-white px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-all flex items-center gap-2 shadow-md"
+            >
               Next: Choose Style
               <span className="material-symbols-outlined">arrow_forward</span>
             </button>
