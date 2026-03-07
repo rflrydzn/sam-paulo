@@ -73,7 +73,7 @@ export default function UploadStep() {
                 <p>{image.name}</p>
               </div>
             ) : (
-              <div>
+              <>
                 <div className="bg-slate-50 border border-slate-200 p-8 rounded-xl">
                   <span className="material-symbols-outlined text-primary text-5xl">
                     cloud_upload
@@ -96,7 +96,7 @@ export default function UploadStep() {
                   <span className="material-symbols-outlined">upload_file</span>
                   Browse Files
                 </button>
-              </div>
+              </>
             )}
           </div>
           <input
