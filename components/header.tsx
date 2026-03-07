@@ -42,7 +42,7 @@ export default function Header() {
               <StepperItem
                 key={step}
                 step={step}
-                className="max-md:items-start [&:not(:last-child)]:flex-1"
+                className="max-md:items-start not-last:flex-1"
               >
                 <StepperTrigger className="gap-4 max-md:flex-col">
                   <StepperIndicator />

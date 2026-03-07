@@ -1,9 +1,11 @@
 "use client";
 
 import { useAppContext } from "@/lib/context";
+import { useRef } from "react";
 
 export default function UploadStep() {
-  const { setStep } = useAppContext();
+  const { image, setStep, setImage } = useAppContext();
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const tips = [
     {
       title: "Natural Lighting",
@@ -35,6 +37,14 @@ export default function UploadStep() {
     setStep(2);
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
+
+  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const selectedFile = e.target.files?.[0];
+    if (!selectedFile) return;
+    setImage(selectedFile);
+    console.log("uploaded", selectedFile);
+  };
+
   return (
     <main className="max-w-6xl mx-auto px-6 py-12">
       <div className="mb-10 text-center md:text-left">
@@ -49,24 +59,52 @@ export default function UploadStep() {
       </div>
       <div className="grid lg:grid-cols-2 gap-10 items-start">
         <div className="space-y-6">
-          <div className="group relative flex flex-col items-center justify-center border-2 border-dashed border-slate-200 bg-slate-50 hover:bg-slate-100 hover:border-primary transition-all rounded-xl p-12 text-center cursor-pointer min-h-80">
-            <div className="bg-slate-50 border border-slate-200 p-8 rounded-xl">
-              <span className="material-symbols-outlined text-primary text-5xl">
-                cloud_upload
-              </span>
-            </div>
-            <h3 className="text-xl font-bold mb-2">
-              Drag &amp; Drop your photo
-            </h3>
-            <p className="text-slate-600">
-              Supports JPG, PNG (Max 10MB). Best for professional-grade AI
-              analysis.
-            </p>
-            <button className="bg-primary text-white px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-all flex items-center gap-2 shadow-md">
-              <span className="material-symbols-outlined">upload_file</span>
-              Browse Files
-            </button>
+          <div
+            onClick={() => inputRef.current?.click()}
+            className="group relative flex flex-col items-center justify-center border-2 border-dashed border-slate-200 bg-slate-50 hover:bg-slate-100 hover:border-primary transition-all rounded-xl p-12 text-center cursor-pointer min-h-80"
+          >
+            {image ? (
+              <div className="flex flex-col items-center justify-center">
+                <img
+                  src={URL.createObjectURL(image)}
+                  alt="Preview"
+                  className="w-40 h-40 object-cover rounded-lg border"
+                />
+                <p>{image.name}</p>
+              </div>
+            ) : (
+              <div>
+                <div className="bg-slate-50 border border-slate-200 p-8 rounded-xl">
+                  <span className="material-symbols-outlined text-primary text-5xl">
+                    cloud_upload
+                  </span>
+                </div>
+                <h3 className="text-xl font-bold mb-2">
+                  Drag &amp; Drop your photo
+                </h3>
+                <p className="text-slate-600">
+                  Supports JPG, PNG (Max 10MB). Best for professional-grade AI
+                  analysis.
+                </p>
+                <button
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    inputRef.current?.click();
+                  }}
+                  className="bg-primary text-white px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-all flex items-center gap-2 shadow-md"
+                >
+                  <span className="material-symbols-outlined">upload_file</span>
+                  Browse Files
+                </button>
+              </div>
+            )}
           </div>
+          <input
+            className="hidden "
+            type="file"
+            ref={inputRef}
+            onChange={handleUpload}
+          />
           <div className="relative flex items-center py-4">
             <div className="grow border-t border-slate-700"></div>
             <span className="shrink mx-4 text-slate-500 font-bold uppercase text-xs tracking-widest">
