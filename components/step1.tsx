@@ -1,10 +1,13 @@
 "use client";
 
 import { useAppContext } from "@/lib/context";
-import { useRef } from "react";
+import { useRef, useState } from "react";
+import WebcamCapture from "./webcam";
+import { Button } from "./ui/button";
 
 export default function UploadStep() {
   const { image, setStep, setImage } = useAppContext();
+  const [enabled, setEnabled] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const tips = [
     {
@@ -113,33 +116,44 @@ export default function UploadStep() {
             <div className="grow border-t border-slate-700"></div>
           </div>
           <div className="relative aspect-video bg-slate-100 rounded-xl overflow-hidden border border-slate-200 group">
-            <div className="absolute inset-0 flex items-center justify-center bg-white/90 group-hover:bg-white/80 transition-colors z-10">
-              <div className="text-center">
-                <span className="material-symbols-outlined text-primary text-4xl mb-2">
-                  photo_camera
-                </span>
-                <p className="font-bold">Live Capture</p>
-                <button className="mt-4 bg-white border border-slate-200 px-6 py-2 rounded-lg font-semibold text-sm hover:border-primary hover:text-primary transition-all shadow-sm">
-                  Enable Camera
-                </button>
-              </div>
-            </div>
-            <div
-              className="w-full h-full bg-linear-to-br from-slate-800 to-slate-950 flex items-center justify-center opacity-50"
-              data-alt="Dark abstract gradient camera preview background"
-            >
-              <div className="w-48 h-48 border border-primary/40 rounded-full flex items-center justify-center">
-                <div className="w-32 h-32 border border-primary/20 rounded-full animate-pulse"></div>
-              </div>
-            </div>
-            <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-full px-8 flex justify-center">
-              <div className="flex gap-4">
-                <div className="bg-black/50 backdrop-blur-md px-4 py-2 rounded-full text-xs flex items-center gap-2 border border-white/10">
-                  <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-                  Waiting for permission...
+            {enabled ? (
+              <>
+                <WebcamCapture />
+              </>
+            ) : (
+              <>
+                <div className="absolute inset-0 flex items-center justify-center bg-white/90 group-hover:bg-white/80 transition-colors z-10">
+                  <div className="text-center">
+                    <span className="material-symbols-outlined text-primary text-4xl mb-2">
+                      photo_camera
+                    </span>
+                    <p className="font-bold">Live Capture</p>
+                    <button
+                      onClick={() => setEnabled(true)}
+                      className="mt-4 bg-white border border-slate-200 px-6 py-2 rounded-lg font-semibold text-sm hover:border-primary hover:text-primary transition-all shadow-sm"
+                    >
+                      Enable Camera
+                    </button>
+                  </div>
                 </div>
-              </div>
-            </div>
+                <div
+                  className="w-full h-full bg-linear-to-br from-slate-800 to-slate-950 flex items-center justify-center opacity-50"
+                  data-alt="Dark abstract gradient camera preview background"
+                >
+                  <div className="w-48 h-48 border border-primary/40 rounded-full flex items-center justify-center">
+                    <div className="w-32 h-32 border border-primary/20 rounded-full animate-pulse"></div>
+                  </div>
+                </div>
+                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-full px-8 flex justify-center">
+                  <div className="flex gap-4">
+                    <div className="bg-black/50 backdrop-blur-md px-4 py-2 rounded-full text-xs flex items-center gap-2 border border-white/10">
+                      <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
+                      Waiting for permission...
+                    </div>
+                  </div>
+                </div>
+              </>
+            )}
           </div>
         </div>
         <div className="space-y-8">
