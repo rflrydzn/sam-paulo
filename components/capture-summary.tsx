@@ -1,5 +1,6 @@
 "use client";
 
+import { blankPortrait } from "@/lib/constants";
 import { useAppContext } from "@/lib/context";
 import { RotateCcw } from "lucide-react";
 
@@ -25,34 +26,22 @@ export default function CaptureSummary({
       {profiles.map((p) => {
         const file = image[p.label];
         return (
-          <div
-            key={p.label}
-            className="group relative flex flex-col items-center justify-center border-2 border-dashed border-slate-200 bg-white hover:bg-slate-50 hover:border-primary transition-all rounded-xl p-6 text-center cursor-pointer"
-          >
-            <div className="bg-slate-50 border border-slate-100 p-4 rounded-lg mb-4">
-              {file ? (
-                <img
-                  src={URL.createObjectURL(file)}
-                  alt="Front profile"
-                  className="w-24 h-24 object-cover rounded-lg"
-                />
-              ) : (
-                <span className="material-symbols-outlined text-primary text-3xl">
-                  {p.icon}
-                </span>
-              )}
+          <div key={p.label} className="relative group">
+            <div className="aspect-3/4 rounded-2xl overflow-hidden border border-secondary/10 bg-slate-100 shadow-xl">
+              <img
+                alt={p.label}
+                className="w-full h-full object-cover grayscale-[0.2] group-hover:scale-105 transition-transform duration-700"
+                src={URL.createObjectURL(file!) ?? blankPortrait}
+              />
+              <h3 className="absolute bottom-4 left-4 font-bold text-white capitalize">
+                {p.label} Profile
+              </h3>
             </div>
-            <h3 className="text-sm font-bold mb-1 capitalize">
-              {p.label} Profile
-            </h3>
             <button
               onClick={() => handleRetake(p.label)}
-              className="bg-primary text-white text-xs px-4 py-2 rounded-lg font-bold hover:bg-primary/90 transition-all flex items-center gap-1 shadow-sm mx-auto"
+              className="absolute -top-2 -right-2 z-30 bg-white rounded-full p-2 shadow-lg hover:scale-110 transition border border-slate-200"
             >
-              <span className="material-symbols-outlined text-sm">
-                <RotateCcw />
-              </span>
-              Retake
+              <RotateCcw className="w-4 h-4 text-primary" />
             </button>
           </div>
         );
