@@ -4,10 +4,10 @@ import { useAppContext } from "@/lib/context";
 import { useRef, useState } from "react";
 import WebcamCapture from "./webcam";
 import { Button } from "./ui/button";
+import LiveCapture from "./live-capture";
 
 export default function UploadStep() {
   const { image, setStep, setImage } = useAppContext();
-  const [enabled, setEnabled] = useState(false);
   const inputRef = useRef<HTMLInputElement | null>(null);
   const tips = [
     {
@@ -41,12 +41,12 @@ export default function UploadStep() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const selectedFile = e.target.files?.[0];
-    if (!selectedFile) return;
-    setImage(selectedFile);
-    console.log("uploaded", selectedFile);
-  };
+  // const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const selectedFile = e.target.files?.[0];
+  //   if (!selectedFile) return;
+  //   setImage(selectedFile);
+  //   console.log("uploaded", selectedFile);
+  // };
 
   return (
     <main className="max-w-6xl mx-auto px-6 py-12">
@@ -66,47 +66,34 @@ export default function UploadStep() {
             onClick={() => inputRef.current?.click()}
             className="group relative flex flex-col items-center justify-center border-2 border-dashed border-slate-200 bg-slate-50 hover:bg-slate-100 hover:border-primary transition-all rounded-xl p-12 text-center cursor-pointer min-h-80"
           >
-            {image ? (
-              <div className="flex flex-col items-center justify-center">
-                <img
-                  src={URL.createObjectURL(image)}
-                  alt="Preview"
-                  className="w-40 h-40 object-cover rounded-lg border"
-                />
-                <p>{image.name}</p>
-              </div>
-            ) : (
-              <>
-                <div className="bg-slate-50 border border-slate-200 p-8 rounded-xl">
-                  <span className="material-symbols-outlined text-primary text-5xl">
-                    cloud_upload
-                  </span>
-                </div>
-                <h3 className="text-xl font-bold mb-2">
-                  Drag &amp; Drop your photo
-                </h3>
-                <p className="text-slate-600">
-                  Supports JPG, PNG (Max 10MB). Best for professional-grade AI
-                  analysis.
-                </p>
-                <button
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    inputRef.current?.click();
-                  }}
-                  className="bg-primary text-white px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-all flex items-center gap-2 shadow-md"
-                >
-                  <span className="material-symbols-outlined">upload_file</span>
-                  Browse Files
-                </button>
-              </>
-            )}
+            <div className="bg-slate-50 border border-slate-200 p-8 rounded-xl">
+              <span className="material-symbols-outlined text-primary text-5xl">
+                cloud_upload
+              </span>
+            </div>
+            <h3 className="text-xl font-bold mb-2">
+              Drag &amp; Drop your photo
+            </h3>
+            <p className="text-slate-600">
+              Supports JPG, PNG (Max 10MB). Best for professional-grade AI
+              analysis.
+            </p>
+            <button
+              onClick={(e) => {
+                e.stopPropagation();
+                inputRef.current?.click();
+              }}
+              className="bg-primary text-white px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-all flex items-center gap-2 shadow-md"
+            >
+              <span className="material-symbols-outlined">upload_file</span>
+              Browse Files
+            </button>
           </div>
           <input
             className="hidden "
             type="file"
             ref={inputRef}
-            onChange={handleUpload}
+            // onChange={handleUpload}
           />
           <div className="relative flex items-center py-4">
             <div className="grow border-t border-slate-700"></div>
@@ -115,46 +102,7 @@ export default function UploadStep() {
             </span>
             <div className="grow border-t border-slate-700"></div>
           </div>
-          <div className="relative aspect-video bg-slate-100 rounded-xl overflow-hidden border border-slate-200 group">
-            {enabled ? (
-              <>
-                <WebcamCapture />
-              </>
-            ) : (
-              <>
-                <div className="absolute inset-0 flex items-center justify-center bg-white/90 group-hover:bg-white/80 transition-colors z-10">
-                  <div className="text-center">
-                    <span className="material-symbols-outlined text-primary text-4xl mb-2">
-                      photo_camera
-                    </span>
-                    <p className="font-bold">Live Capture</p>
-                    <button
-                      onClick={() => setEnabled(true)}
-                      className="mt-4 bg-white border border-slate-200 px-6 py-2 rounded-lg font-semibold text-sm hover:border-primary hover:text-primary transition-all shadow-sm"
-                    >
-                      Enable Camera
-                    </button>
-                  </div>
-                </div>
-                <div
-                  className="w-full h-full bg-linear-to-br from-slate-800 to-slate-950 flex items-center justify-center opacity-50"
-                  data-alt="Dark abstract gradient camera preview background"
-                >
-                  <div className="w-48 h-48 border border-primary/40 rounded-full flex items-center justify-center">
-                    <div className="w-32 h-32 border border-primary/20 rounded-full animate-pulse"></div>
-                  </div>
-                </div>
-                <div className="absolute bottom-4 left-1/2 -translate-x-1/2 z-20 w-full px-8 flex justify-center">
-                  <div className="flex gap-4">
-                    <div className="bg-black/50 backdrop-blur-md px-4 py-2 rounded-full text-xs flex items-center gap-2 border border-white/10">
-                      <span className="w-2 h-2 bg-red-500 rounded-full animate-pulse"></span>
-                      Waiting for permission...
-                    </div>
-                  </div>
-                </div>
-              </>
-            )}
-          </div>
+          <LiveCapture />
         </div>
         <div className="space-y-8">
           <div className="bg-slate-50 border border-slate-200 p-8 rounded-xl">
