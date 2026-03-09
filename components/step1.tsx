@@ -5,6 +5,7 @@ import { useRef, useState } from "react";
 import WebcamCapture from "./webcam";
 import { Button } from "./ui/button";
 import LiveCapture from "./live-capture";
+import CaptureSummary from "./capture-summary";
 
 export default function UploadStep() {
   const { image, setStep, setImage } = useAppContext();
@@ -41,12 +42,7 @@ export default function UploadStep() {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
-  // const handleUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const selectedFile = e.target.files?.[0];
-  //   if (!selectedFile) return;
-  //   setImage(selectedFile);
-  //   console.log("uploaded", selectedFile);
-  // };
+  const allCaptured = image.front && image.side && image.back;
 
   return (
     <main className="max-w-6xl mx-auto px-6 py-12">
@@ -154,13 +150,14 @@ export default function UploadStep() {
             <button className="px-8 py-3 rounded-lg border border-slate-700 font-bold hover:bg-slate-800 transition-all">
               Cancel
             </button>
-            <button
+            <Button
+              disabled={!allCaptured}
               onClick={() => handleClick()}
-              className="bg-primary text-white px-8 py-3 rounded-lg font-bold hover:bg-primary/90 transition-all flex items-center gap-2 shadow-md"
+              className="bg-primary text-white px-8 py-7 rounded-lg font-bold hover:bg-primary/90 transition-all flex items-center gap-2 shadow-md"
             >
               Next: Choose Style
               <span className="material-symbols-outlined">arrow_forward</span>
-            </button>
+            </Button>
           </div>
         </div>
       </div>

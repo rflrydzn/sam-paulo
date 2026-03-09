@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import WebcamCapture, { WebcamCaptureRef } from "./webcam";
 import { useAppContext } from "@/lib/context";
+import CaptureSummary from "./capture-summary";
 
 export default function LiveCapture() {
   const { image } = useAppContext();
@@ -20,7 +21,7 @@ export default function LiveCapture() {
   ];
 
   const profileOrder: ("front" | "side" | "back")[] = ["front", "side", "back"];
-
+  const allCaptured = image.front && image.side && image.back;
   useEffect(() => {
     if (!enabled) return;
 
@@ -38,6 +39,11 @@ export default function LiveCapture() {
     const timer = setInterval(() => setTime((prev) => prev - 1), 1000);
     return () => clearInterval(timer);
   }, [time, enabled]);
+
+  if (allCaptured)
+    return (
+      <CaptureSummary onRetake={(profile) => setSelectedProfile(profile)} />
+    );
 
   return (
     <div className="relative aspect-video bg-slate-100 rounded-xl overflow-hidden border border-slate-200 group">
