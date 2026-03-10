@@ -1,4 +1,9 @@
+"use client";
+
+import { useAppContext } from "@/lib/context";
+
 export default function StyleStep() {
+  const { image } = useAppContext();
   return (
     <main className="max-w-7xl mx-auto px-6 py-8 pb-32">
       <div className="flex flex-col lg:flex-row gap-8">
@@ -18,7 +23,7 @@ export default function StyleStep() {
                   alt="User uploaded reference portrait photo"
                   className="w-full h-full object-cover"
                   data-alt="User uploaded reference portrait photo"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuD710nNBRuHggM4vUMjpl2_Dk9cSDO2X7L_oDBWXfcHr95egk-WYhNDuCzsHGQ4IK2Ct1CHbmBDChZGj64Kbz9MKEz60ML664GmkoMkrh-tocb7i4uq0MXtXutwYsBiTVy79Oymh0QRNiuvMj_OH3rYI28lBWVit68J0zk1WXwVeRi9--8i7ZqN8u6Sd1olk5KcoolDWOlyGYgQdY7X0zjXqD8YjxPYTNccMn1dTTwL9FF47YuRoH6xPApF-UVAus-YW0hhFSY7EGnA"
+                  src={URL.createObjectURL(image.front!)}
                 />
               </div>
               <div className="mt-4 p-4 rounded-lg bg-primary/5 border border-primary/10">

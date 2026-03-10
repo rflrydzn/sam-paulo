@@ -48,7 +48,32 @@ export default function LiveCapture() {
   return (
     <div className="relative aspect-video bg-slate-100 rounded-xl overflow-hidden border border-slate-200 group">
       {enabled ? (
-        <WebcamCapture profile={selectedProfile} ref={webcamRef} />
+        <div className="absolute inset-0 overflow-hidden">
+          <div
+            style={{
+              position: "absolute",
+              top: "50%",
+              left: "50%",
+              width: 1280,
+              height: 720,
+              transform: "translate(-50%, -50%) scale(var(--webcam-scale, 1))",
+              transformOrigin: "center center",
+            }}
+            ref={(el) => {
+              if (el) {
+                const parent = el.parentElement;
+                if (parent) {
+                  const scaleX = parent.clientWidth / 1280;
+                  const scaleY = parent.clientHeight / 720;
+                  const scale = Math.max(scaleX, scaleY);
+                  el.style.setProperty("--webcam-scale", String(scale));
+                }
+              }
+            }}
+          >
+            <WebcamCapture profile={selectedProfile} ref={webcamRef} />
+          </div>
+        </div>
       ) : (
         <>
           <div className="absolute top-0 left-0 w-full p-4 flex justify-center gap-3 z-30">
@@ -94,11 +119,14 @@ export default function LiveCapture() {
           </div>
         </>
       )}
-      <div className="w-full h-full bg-linear-to-br from-slate-900 to-black flex items-center justify-center opacity-80">
-        <div className="w-64 h-64 border-2 border-dashed border-white/20 rounded-full flex items-center justify-center">
-          <div className="w-48 h-48 border border-primary/30 rounded-full animate-pulse"></div>
+      {!enabled && (
+        <div className="w-full h-full bg-linear-to-br from-slate-900 to-black flex items-center justify-center opacity-80">
+          <div className="w-64 h-64 border-2 border-dashed border-white/20 rounded-full flex items-center justify-center">
+            <div className="w-48 h-48 border border-primary/30 rounded-full animate-pulse"></div>
+          </div>
         </div>
-      </div>
+      )}
+
       {enabled && (
         <div className="absolute bottom-4 left-0 w-full px-6 flex justify-between items-center z-20">
           <div className="bg-black/60 backdrop-blur-md px-3 py-1.5 rounded-full text-[10px] text-white flex items-center gap-2 border border-white/10 font-bold uppercase tracking-tighter">
