@@ -1,9 +1,16 @@
 "use client";
-
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { hairstyles } from "@/lib/constants";
 import { useAppContext } from "@/lib/context";
+import { useState } from "react";
 
 export default function StyleStep() {
   const { image } = useAppContext();
+  const [activeTab, setActiveTab] = useState(hairstyles.categories[0].category);
+
+  const currentStyle = hairstyles.categories.find(
+    (cat) => cat.category === activeTab,
+  )?.styles;
   return (
     <main className="max-w-7xl mx-auto px-6 py-8 pb-32">
       <div className="flex flex-col lg:flex-row gap-8">
@@ -23,7 +30,7 @@ export default function StyleStep() {
                   alt="User uploaded reference portrait photo"
                   className="w-full h-full object-cover"
                   data-alt="User uploaded reference portrait photo"
-                  src={URL.createObjectURL(image.front!)}
+                  src={image.front ? URL.createObjectURL(image.front) : ""}
                 />
               </div>
               <div className="mt-4 p-4 rounded-lg bg-primary/5 border border-primary/10">
@@ -52,127 +59,58 @@ export default function StyleStep() {
               Select a premium hairstyle to apply to your 3D portrait
             </p>
           </div>
-          <div className="flex gap-3 mb-8 overflow-x-auto pb-2 scrollbar-hide">
-            <button className="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-primary text-white px-6 font-bold text-sm">
-              All Styles
-            </button>
-            <button className="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-100 border border-slate-200 text-slate-700 px-6 font-medium text-sm hover:bg-slate-200">
-              Clean Fade
-            </button>
-            <button className="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-100 border border-slate-200 text-slate-700 px-6 font-medium text-sm hover:bg-slate-200">
-              Side Part
-            </button>
-            <button className="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-100 border border-slate-200 text-slate-700 px-6 font-medium text-sm hover:bg-slate-200">
-              Modern Quiff
-            </button>
-            <button className="flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full bg-slate-100 border border-slate-200 text-slate-700 px-6 font-medium text-sm hover:bg-slate-200">
-              Buzz Cut
-            </button>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="group relative flex flex-col bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-primary transition-all shadow-sm hover:shadow-md">
-              <div className="aspect-video w-full overflow-hidden">
-                <img
-                  alt="Clean skin fade haircut preview"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  data-alt="Clean skin fade haircut preview"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBIbXrhaRE7GQvN5NKoASOspQFFbLw_zllgEidavtpW4hIfnZFsEIgtgvVjwtheYhcMUG0oXVRM3Msq_2WyTJ8Z8dDmo3LF0ijb6OizqYdQuhagTm2_hkkIJnZ8VYx0prkfewuXz7G7KpXEPLymOEzDJbHxbn-M5wc-qFu4UVAonDmBFF7vwpOcfMcHtNjhlnNaMkkW_Pen2YdY-CIQCDkKhSC0xr_RKIkovJiM96ELJ0UO0tWLr6P_JUxPp53Tc8Cj4GnNPU6jZ1-b"
-                />
+          <Tabs
+            defaultValue={activeTab}
+            onValueChange={(val) => setActiveTab(val)}
+          >
+            <TabsList className="bg-white my-4">
+              <div className="flex gap-3 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+                {hairstyles.categories.map((cat) => (
+                  <TabsTrigger
+                    key={cat.category}
+                    value={cat.category}
+                    className="bg-slate-100 border border-slate-200 text-slate-700 flex h-10 shrink-0 items-center justify-center gap-x-2 rounded-full px-6 font-bold text-sm"
+                  >
+                    {cat.category}
+                  </TabsTrigger>
+                ))}
               </div>
-              <div className="p-5 flex flex-col flex-1">
-                <div className="flex justify-between items-start mb-2">
-                  <h4 className="text-xl font-bold text-slate-900">
-                    Classic Skin Fade
-                  </h4>
-                  <span className="bg-primary/20 text-primary text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
-                    Popular
-                  </span>
+            </TabsList>
+            {hairstyles.categories.map((cat) => (
+              <TabsContent key={cat.category} value={cat.category}>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  {currentStyle?.map((s) => (
+                    <div className="group relative flex flex-col bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-primary transition-all shadow-sm hover:shadow-md">
+                      <div className="aspect-video w-full overflow-hidden">
+                        <img
+                          alt="Clean skin fade haircut preview"
+                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
+                          data-alt="Clean skin fade haircut preview"
+                          src={s.image}
+                        />
+                      </div>
+                      <div className="p-5 flex flex-col flex-1">
+                        <div className="flex justify-between items-start mb-2">
+                          <h4 className="text-xl font-bold text-slate-900">
+                            {s.name}
+                          </h4>
+                          {s.banner && (
+                            <span className="bg-primary/20 text-primary text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
+                              {s.banner}
+                            </span>
+                          )}
+                        </div>
+                        <p className="text-slate-600">{s.description}</p>
+                        <button className="mt-auto w-full bg-primary/10 border border-primary text-primary py-2.5 rounded-lg font-bold text-sm group-hover:bg-primary group-hover:text-white transition-all">
+                          Select Style
+                        </button>
+                      </div>
+                    </div>
+                  ))}
                 </div>
-                <p className="text-slate-600">
-                  A sharp, gradient blend that tapers to the skin at the
-                  neckline. Perfect for a sharp professional look.
-                </p>
-                <button className="mt-auto w-full bg-primary/10 border border-primary text-primary py-2.5 rounded-lg font-bold text-sm group-hover:bg-primary group-hover:text-background-dark transition-all">
-                  Select Style
-                </button>
-              </div>
-            </div>
-            <div className="group relative flex flex-col bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-primary transition-all shadow-sm hover:shadow-md">
-              <div className="aspect-video w-full overflow-hidden">
-                <img
-                  alt="Modern textured quiff hairstyle preview"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  data-alt="Modern textured quiff hairstyle preview"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuBZUE_sy9yNqVuArLs45CHBBwHZgtfaj6vISEgVEmo-9vNCtMEdLdawbipyfvieG4vxrWqsSsPCQuyFrw8z9lPHZeTVTiWI-CFeTx5oxF4gCx0F_D7d4sJIZTnYX7y3mhMm7d6bIVCiShKFzZmvzmTYAqSsXOUZiP8axQLWD9VfjL_4hdQrSOVamdG-I3aMc4XgRYIkLm-RX1PjcINiNVdAZNH6AoS-p8cDWsAN3bRGecy7EZWQgBp5Sd7fZJ36NgxH8XqRgUEM-FQH"
-                />
-              </div>
-              <div className="p-5 flex flex-col flex-1">
-                <div className="flex justify-between items-start mb-2">
-                  <h4 className="text-xl font-bold text-slate-900">
-                    Modern Quiff
-                  </h4>
-                  <span className="bg-secondary text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase tracking-wider">
-                    Trendy
-                  </span>
-                </div>
-                <p className="text-slate-600">
-                  Volume and texture combined for a bold statement. Ideal for
-                  those with thick hair looking for height.
-                </p>
-                <button className="mt-auto w-full bg-primary/10 border border-primary text-primary py-2.5 rounded-lg font-bold text-sm group-hover:bg-primary group-hover:text-background-dark transition-all">
-                  Select Style
-                </button>
-              </div>
-            </div>
-            <div className="group relative flex flex-col bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-primary transition-all shadow-sm hover:shadow-md">
-              <div className="aspect-video w-full overflow-hidden">
-                <img
-                  alt="Polished side part with pomade preview"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  data-alt="Polished side part with pomade preview"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCq2Pa01n6GztCzUaLjYPcihxQI3M0qO3a7CeKK1AyK2ofkVPVpWUNnwFi5Z7pbhD4UJSQpgRZmcpVOWGZtmudisdoTG9wpDd7DEsEomszUEQ-d4UEsVkID6u2cgvNV05BIPt8POLYROel8HB7ybOMDEdTihLZK5Acan-zH2a3RvB5Du1eekvUto4sgGSRr9RIRTPn7xlzzbbRLjmTgN_kTlnCpX775MAs2U3AseNDi_Zfxeo-TYvszVs_Rc0qNfVK7l7dB4p7SWYA3"
-                />
-              </div>
-              <div className="p-5 flex flex-col flex-1">
-                <div className="flex justify-between items-start mb-2">
-                  <h4 className="text-xl font-bold text-slate-900">
-                    Executive Side Part
-                  </h4>
-                </div>
-                <p className="text-slate-600">
-                  A timeless classic featuring a defined part and slick finish.
-                  The ultimate choice for formal events.
-                </p>
-                <button className="mt-auto w-full bg-primary/10 border border-primary text-primary py-2.5 rounded-lg font-bold text-sm group-hover:bg-primary group-hover:text-background-dark transition-all">
-                  Select Style
-                </button>
-              </div>
-            </div>
-            <div className="group relative flex flex-col bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-primary transition-all shadow-sm hover:shadow-md">
-              <div className="aspect-video w-full overflow-hidden">
-                <img
-                  alt="Uniform buzz cut haircut preview"
-                  className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110"
-                  data-alt="Uniform buzz cut haircut preview"
-                  src="https://lh3.googleusercontent.com/aida-public/AB6AXuCY7YjieV3kPkUgJNGso3UdRAhQwHMvGo6nVWB1v4pX9IP1Ct5EW46uTcBKw3ijOES_LUBh5xBt0_GNlCT5WdeHTgcMYu9AyNrV5B71NT8J-dm_v0_A14PWN3zYntwghQuQRXG_0usIDVNclCpTPEzvRLViA5Gjwj1fpAkHqFB5wJj_g8TnBFyMgT-UTGKK8bj2d4mx0RZp5CJgdctO_BzqbQsSiRmFtmUVjfX-ps_FdUPVSdoxCvnMVMCAV5HPnGuPKljWik6bZqDa"
-                />
-              </div>
-              <div className="p-5 flex flex-col flex-1">
-                <div className="flex justify-between items-start mb-2">
-                  <h4 className="text-xl font-bold text-slate-900">
-                    Precision Buzz Cut
-                  </h4>
-                </div>
-                <p className="text-slate-600">
-                  Minimalist and low-maintenance. This style emphasizes facial
-                  structure and provides a clean look.
-                </p>
-                <button className="mt-auto w-full bg-primary/10 border border-primary text-primary py-2.5 rounded-lg font-bold text-sm group-hover:bg-primary group-hover:text-background-dark transition-all">
-                  Select Style
-                </button>
-              </div>
-            </div>
-          </div>
+              </TabsContent>
+            ))}
+          </Tabs>
         </section>
       </div>
     </main>

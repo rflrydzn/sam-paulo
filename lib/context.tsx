@@ -22,7 +22,7 @@ type ContextType = {
 export const AppContext = createContext<ContextType | undefined>(undefined);
 
 export function AppProvider({ children }: { children: React.ReactNode }) {
-  const [step, setStep] = useState<1 | 2 | 3>(1);
+  const [step, setStep] = useState<1 | 2 | 3>(2);
   const [image, setImage] = useState<{
     front: File | null;
     side: File | null;
