@@ -18,17 +18,17 @@ export default function Header() {
     {
       step: 1,
       title: "Step One",
-      description: "Desc for step one",
+      description: "Upload your photo reference",
     },
     {
       step: 2,
       title: "Step Two",
-      description: "Desc for step two",
+      description: "Select your hairstyle",
     },
     {
       step: 3,
       title: "Step Three",
-      description: "Desc for step three",
+      description: "Wait for the magic to happen",
     },
   ];
 

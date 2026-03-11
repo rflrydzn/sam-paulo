@@ -38,7 +38,13 @@ export default function StyleStep() {
                   Profile Scan Complete
                 </p>
                 <p className="text-xs text-slate-400 mt-1">
-                  Uploaded 2 mins ago • Frontal View
+                  Uploaded{" "}
+                  {image.front
+                    ? Math.floor(
+                        (Date.now() - image.front?.lastModified) / 60000,
+                      )
+                    : 0}{" "}
+                  mins ago • Frontal View
                 </p>
               </div>
               <button className="mt-4 w-full flex items-center justify-center gap-2 py-3 rounded-lg border-2 border-primary/40 text-primary font-bold hover:bg-primary/10 transition-all">
@@ -80,7 +86,10 @@ export default function StyleStep() {
               <TabsContent key={cat.category} value={cat.category}>
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   {currentStyle?.map((s) => (
-                    <div className="group relative flex flex-col bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-primary transition-all shadow-sm hover:shadow-md">
+                    <div
+                      key={s.name}
+                      className="group relative flex flex-col bg-white rounded-xl border border-slate-200 overflow-hidden hover:border-primary transition-all shadow-sm hover:shadow-md"
+                    >
                       <div className="aspect-video w-full overflow-hidden">
                         <img
                           alt="Clean skin fade haircut preview"
