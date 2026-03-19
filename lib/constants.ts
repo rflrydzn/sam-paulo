@@ -12,7 +12,7 @@ export const hairstyles = {
           description:
             "Very short hair cut evenly with clippers. Clean and extremely low maintenance.",
           image:
-            "https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800",
+            "https://www.copenhagenfashionsummit.com/wp-content/uploads/2025/11/Buzz-Cut-Fade.png.webp",
         },
         {
           name: "Crew Cut",
@@ -20,7 +20,7 @@ export const hairstyles = {
           description:
             "Short sides with a slightly longer top. Practical haircut for everyday wear.",
           image:
-            "https://images.unsplash.com/photo-1595152772835-219674b2a8a6?w=800",
+            "https://www.birchbox.com/_next/image?url=https%3A%2F%2Fimages.prismic.io%2Fbirchbox%2FYzFmMTczMzAtN2NjOC00YjM2LTlkMDAtMjVjOTkzZDQ4NDdm_m_mar_besthairstyles2016_crewcut_700x400.jpg%3Fauto%3Dcompress%2Cformat%26rect%3D0%2C0%2C700%2C400%26w%3D1680%26h%3D960&w=3840&q=75",
         },
         {
           name: "French Crop",
@@ -28,7 +28,7 @@ export const hairstyles = {
           description:
             "Short sides with a textured top and fringe. Modern and easy to maintain.",
           image:
-            "https://images.unsplash.com/photo-1605497788044-5a32c7078486?w=800",
+            "https://crewcuthair.com/wp-content/uploads/al_opt_content/IMAGE/crewcuthair.com/wp-content/uploads/2025/10/messy-french-crop-feature-2000x1333-1.webp?bv_host=crewcuthair.com&bv-resized-infos=bv_resized_mobile%3A480%2A320%3Bbv_resized_ipad%3A820%2A547%3Bbv_resized_desktop%3A1536%2A1024",
         },
         {
           name: "Textured Crop",
@@ -36,7 +36,7 @@ export const hairstyles = {
           description:
             "Short haircut with choppy layers on top. Adds texture and natural movement.",
           image:
-            "https://images.unsplash.com/photo-1622287162716-f311baa1a2b8?w=800",
+            "https://vagazine.com/vaga_v3/wp-content/uploads/2025/12/caesar-haircut.jpg",
         },
       ],
     },
@@ -49,21 +49,21 @@ export const hairstyles = {
           description:
             "Hair parted neatly to one side. Timeless professional hairstyle.",
           image:
-            "https://images.unsplash.com/photo-1599566150163-29194dcaad36?w=800",
+            "https://beardbeasts.com/wp-content/uploads/2025/10/skin-fade-side-part-featured-style-guide-5285974.jpg",
         },
         {
           name: "Comb Over",
           description:
             "Hair combed smoothly to one side. Clean look often paired with fades.",
           image:
-            "https://images.unsplash.com/photo-1621786030484-4c855eed6974?w=800",
+            "https://crewcuthair.com/wp-content/uploads/al_opt_content/IMAGE/crewcuthair.com/wp-content/uploads/2025/11/Short-Comb-Over-Fade-Haircut-Guide-for-Men-2025.webp.bv_resized_mobile.webp.bv.webp?bv_host=crewcuthair.com",
         },
         {
           name: "Slick Back",
           description:
             "Hair styled straight back with volume and shine. Sleek polished look.",
           image:
-            "https://images.unsplash.com/photo-1618077360395-f3068be8e001?w=800",
+            "https://crewcuthair.com/wp-content/uploads/2025/10/Slick-Back-Haircut-1024x576.webp",
         },
         {
           name: "Ivy League",
@@ -71,7 +71,7 @@ export const hairstyles = {
           description:
             "Short refined haircut with slightly longer top. Smart academic style.",
           image:
-            "https://images.unsplash.com/photo-1615109398623-88346a601842?w=800",
+            "https://www.barberstake.com/wp-content/uploads/2024/11/Ivy-League-Haircut-995x503.jpg",
         },
       ],
     },

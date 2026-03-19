@@ -1,4 +1,7 @@
+import { useAppContext } from "@/lib/context";
+
 export default function GenerateStep() {
+  const { results } = useAppContext();
   return (
     <main className="flex-1 max-w-7xl mx-auto w-full px-6 py-8">
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-10">
@@ -29,63 +32,69 @@ export default function GenerateStep() {
         </div>
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-3 gap-6 mb-12">
-        <div className="group relative aspect-3/4 rounded-2xl overflow-hidden border border-secondary/10 bg-slate-100 shadow-xl">
-          <img
-            alt="Front View"
-            className="w-full h-full object-cover grayscale-[0.2] group-hover:scale-105 transition-transform duration-700"
-            data-alt="Portrait of man with sharp fade haircut front view"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuCz16Az3w3iQ5REcYOTjMEpJtkwjFNQjq5aLc4UoakEb92rbtNvamiDrberc_VbtoedAbEdr7kRBzuBPN7pbJ43IYSlLc7HfGhzgRO69_1y-47aFvSfXE2tgEOWU3KO456vyBf6cClMr_0tHpJg0HFJoyXZtcyJjRG3GnuJrI6IwFoJgJQI8R03qL4v4Y1njfMPcEyNoE9k5gHoxNp_A5eg4HyeE-GNA2oyN6I4av8qfc4fhfNoHcGXGrKu0R3Svr8wWk2tYqSAOItH"
-          />
-          <div className="absolute inset-0 bg-linear-to-t from-background-dark via-transparent to-transparent opacity-80"></div>
-          <div className="absolute inset-0 scanline pointer-events-none opacity-20"></div>
-          <div className="absolute bottom-6 left-6 flex flex-col">
-            <span className="text-secondary text-[10px] font-bold tracking-[0.3em] uppercase mb-1">
-              Perspective 01
-            </span>
-            <h3 className="text-2xl font-bold text-white">Frontal Profile</h3>
+        {results.front && (
+          <div className="group relative aspect-3/4 rounded-2xl overflow-hidden border border-secondary/10 bg-slate-100 shadow-xl">
+            <img
+              alt="Front View"
+              className="w-full h-full object-cover grayscale-[0.2] group-hover:scale-105 transition-transform duration-700"
+              data-alt="Portrait of man with sharp fade haircut front view"
+              src={results.front}
+            />
+            <div className="absolute inset-0 bg-linear-to-t from-background-dark via-transparent to-transparent opacity-80"></div>
+            <div className="absolute inset-0 scanline pointer-events-none opacity-20"></div>
+            <div className="absolute bottom-6 left-6 flex flex-col">
+              <span className="text-secondary text-[10px] font-bold tracking-[0.3em] uppercase mb-1">
+                Perspective 01
+              </span>
+              <h3 className="text-2xl font-bold text-white">Frontal Profile</h3>
+            </div>
+            <div className="absolute top-6 right-6 p-2 rounded-lg glass-panel text-white/80 text-xs font-mono">
+              HD_RENDER_v4.2
+            </div>
           </div>
-          <div className="absolute top-6 right-6 p-2 rounded-lg glass-panel text-white/80 text-xs font-mono">
-            HD_RENDER_v4.2
+        )}
+        {results.side && (
+          <div className="group relative aspect-3/4 rounded-2xl overflow-hidden border border-secondary/10 bg-slate-100 shadow-xl">
+            <img
+              alt="Side View"
+              className="w-full h-full object-cover grayscale-[0.2] group-hover:scale-105 transition-transform duration-700"
+              data-alt="Side profile showing textured hair and sharp fade"
+              src={results.side}
+            />
+            <div className="absolute inset-0 bg-linear-to-t from-background-dark via-transparent to-transparent opacity-80"></div>
+            <div className="absolute inset-0 scanline pointer-events-none opacity-20"></div>
+            <div className="absolute bottom-6 left-6 flex flex-col">
+              <span className="text-secondary text-[10px] font-bold tracking-[0.3em] uppercase mb-1">
+                Perspective 02
+              </span>
+              <h3 className="text-2xl font-bold text-white">Side Texture</h3>
+            </div>
+            <div className="absolute top-6 right-6 p-2 rounded-lg glass-panel text-white/80 text-xs font-mono">
+              FADE_GEOMETRY_OK
+            </div>
           </div>
-        </div>
-        <div className="group relative aspect-3/4 rounded-2xl overflow-hidden border border-secondary/10 bg-slate-100 shadow-xl">
-          <img
-            alt="Side View"
-            className="w-full h-full object-cover grayscale-[0.2] group-hover:scale-105 transition-transform duration-700"
-            data-alt="Side profile showing textured hair and sharp fade"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuAs5yBWusBBCPzxdLrEthSufaU_WtSx8TY_lXsZNhlFkVbUAwOuRsBvpBWH35uC0GitZcbrn6HyhKE_2GVGkvBouzAdUTFhh3BIlTGHZb9623sxrxjmf9hpP-CyJex1JGp0BjmlYjok76Wv2wZyII7V1nHxJpjj25IHCW__jhBbSg-WKg-KVUc8z3O56Vz3Wk3pksIiedz7ovI7ssKP8Z7bYMMpKDRpM4fU_gmAAKLwICra6Khyvtyk1VHFWZMICRS_yaSqPxQJcDPA"
-          />
-          <div className="absolute inset-0 bg-linear-to-t from-background-dark via-transparent to-transparent opacity-80"></div>
-          <div className="absolute inset-0 scanline pointer-events-none opacity-20"></div>
-          <div className="absolute bottom-6 left-6 flex flex-col">
-            <span className="text-secondary text-[10px] font-bold tracking-[0.3em] uppercase mb-1">
-              Perspective 02
-            </span>
-            <h3 className="text-2xl font-bold text-white">Side Texture</h3>
+        )}
+        {results.back && (
+          <div className="group relative aspect-3/4 rounded-2xl overflow-hidden border border-secondary/10 bg-slate-100 shadow-xl">
+            <img
+              alt="Back View"
+              className="w-full h-full object-cover grayscale-[0.2] group-hover:scale-105 transition-transform duration-700"
+              data-alt="Rear view of professional hairstyle with tapered neckline"
+              src={results.back}
+            />
+            <div className="absolute inset-0 bg-linear-to-t from-background-dark via-transparent to-transparent opacity-80"></div>
+            <div className="absolute inset-0 scanline pointer-events-none opacity-20"></div>
+            <div className="absolute bottom-6 left-6 flex flex-col">
+              <span className="text-secondary text-[10px] font-bold tracking-[0.3em] uppercase mb-1">
+                Perspective 03
+              </span>
+              <h3 className="text-2xl font-bold text-white">Neckline Finish</h3>
+            </div>
+            <div className="absolute top-6 right-6 p-2 rounded-lg glass-panel text-white/80 text-xs font-mono">
+              SIMULATION_COMPLETE
+            </div>
           </div>
-          <div className="absolute top-6 right-6 p-2 rounded-lg glass-panel text-white/80 text-xs font-mono">
-            FADE_GEOMETRY_OK
-          </div>
-        </div>
-        <div className="group relative aspect-3/4 rounded-2xl overflow-hidden border border-secondary/10 bg-slate-100 shadow-xl">
-          <img
-            alt="Back View"
-            className="w-full h-full object-cover grayscale-[0.2] group-hover:scale-105 transition-transform duration-700"
-            data-alt="Rear view of professional hairstyle with tapered neckline"
-            src="https://lh3.googleusercontent.com/aida-public/AB6AXuA2ayGt3HIrgNtE1g9zzVkSG8muRyscnwEBDejzbNgBSwByVIQ8rXx4quax07gCROLPctFTWD0-v43bplCnJhRVGhix4C0QGhUNKKskGdP-op3ClaDKSaMHvffiQCUOT7_hORwgA5oiwMPnQvaGQFlztkIpC1WI3t1s6X0427oVWmoy2cMLG8P0nEVXAcgVi-pRuxOB6vUI3ONv96PW9t0IsiHbC57tgXewqipBBpBlhTZmg4CVbbYDuNZ42PKeBOT27llEqk0cdsaY"
-          />
-          <div className="absolute inset-0 bg-linear-to-t from-background-dark via-transparent to-transparent opacity-80"></div>
-          <div className="absolute inset-0 scanline pointer-events-none opacity-20"></div>
-          <div className="absolute bottom-6 left-6 flex flex-col">
-            <span className="text-secondary text-[10px] font-bold tracking-[0.3em] uppercase mb-1">
-              Perspective 03
-            </span>
-            <h3 className="text-2xl font-bold text-white">Neckline Finish</h3>
-          </div>
-          <div className="absolute top-6 right-6 p-2 rounded-lg glass-panel text-white/80 text-xs font-mono">
-            SIMULATION_COMPLETE
-          </div>
-        </div>
+        )}
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div className="p-6 rounded-2xl glass-panel border border-slate-200 flex flex-col justify-between">

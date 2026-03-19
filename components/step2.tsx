@@ -3,10 +3,28 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { hairstyles } from "@/lib/constants";
 import { useAppContext } from "@/lib/context";
 import { useState } from "react";
+import { generateAllSides } from "@/lib/generateImage";
 
 export default function StyleStep() {
-  const { image } = useAppContext();
+  const { image, setResults, setStep } = useAppContext();
+  const [loading, setLoading] = useState(false);
+
   const [activeTab, setActiveTab] = useState(hairstyles.categories[0].category);
+
+  const handleSelectStyle = async (styleUrl: string) => {
+    if (!image.front || !image.side || !image.back) return;
+    setLoading(true);
+    try {
+      const results = await generateAllSides(
+        { front: image.front, side: image.side, back: image.back },
+        styleUrl,
+      );
+      setResults(results);
+      setStep(3);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const currentStyle = hairstyles.categories.find(
     (cat) => cat.category === activeTab,
@@ -110,8 +128,11 @@ export default function StyleStep() {
                           )}
                         </div>
                         <p className="text-slate-600">{s.description}</p>
-                        <button className="mt-auto w-full bg-primary/10 border border-primary text-primary py-2.5 rounded-lg font-bold text-sm group-hover:bg-primary group-hover:text-white transition-all">
-                          Select Style
+                        <button
+                          className="mt-auto w-full bg-primary/10 border border-primary text-primary py-2.5 rounded-lg font-bold text-sm group-hover:bg-primary group-hover:text-white transition-all"
+                          onClick={() => handleSelectStyle(s.image)}
+                        >
+                          {loading ? "Generating..." : "Select Style"}
                         </button>
                       </div>
                     </div>
